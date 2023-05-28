@@ -1,0 +1,78 @@
+{% extends 'base2.html' %}
+{% block content %}
+<style>
+body{
+    background-color:#F2F7A1;
+    /*font-family:Montserrat;*/
+   }
+</style>
+
+
+<div class=container style="display: flex; justify-content: center;">
+<h1 style="text-align:center; margin-top:50px; font-weight:bold; display:inline ;margin-right:30px "> {% block title %} Items {% endblock %}</h1>
+</div>
+
+<form method="post">
+  <div class="form-row">
+    <div class="col-6">
+      <input type="text" class="form-control" name="item_name" placeholder="Item name">
+    </div>
+    <div class="col">
+      <input type="number" class="form-control" name="item_wt" placeholder="Quantity available" pattern="[0-9]+">
+    </div>
+    <div class="col">
+      <input type="number" class="form-control" name="price_per_unit" placeholder="price perunit" pattern="[0-9]+">
+    </div>
+    <button type="submit button" style="margin-left:20px; padding-left:10px; padding-right:10px;" class="btn btn-secondary">Insert</button>
+  </div>
+
+</form>
+
+
+<div class="row" style="margin-top:30px; background-color:#D6E4AA">
+<div class="col-4">
+    <h4>Product</h4>
+</div>
+
+<div class="col-3">
+    <h4>Quantity</h4>
+</div>
+
+<div class="col-2">
+    <h4>Cost</h4>
+</div>
+
+</div>
+
+<div class="post_container" style="margin-top:20px;">
+{% for item in items %}
+    	<div class="row">
+    	    <div class="col-4">
+                <h4 class="post_title">{{ item['name'] }}</h4>
+            </div>
+            <div class="col-3" >
+
+                <h4>{{ item['weight'] }}</h4>
+            </div>
+
+            <div class="col-2" >
+                <h4>${{ item['price_per_unit'] }}</h4>
+            </div>
+           <div class="col-3">
+             <div class="row">
+                <a href="{{ url_for('add_stock', c_id=item['c_id'], id=item['id']) }}">
+                  <button type="button" class="btn btns btn-secondary btn-block">Add Stock</button>
+                </a>
+              </div>
+              <div class="row">
+                <a href="{{ url_for('item_edit', c_id=item['c_id'], id=item['id']) }}">
+                  <button type="button" class="btn btn-dark btns btn-block">Edit</button>
+                </a>
+              </div>
+            </div>
+
+    	</div>
+    	    <hr>
+    {% endfor %}
+    </div>
+{% endblock %}
